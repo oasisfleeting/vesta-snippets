@@ -1,4 +1,0 @@
-git-ftp.noarch : Git powered FTP client written as shell script
-git-review.noarch : A Git helper for integration with Gerrit
-gitflow.noarch : Extensions providing operations for V. Driessen's branching model
-
