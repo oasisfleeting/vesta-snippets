@@ -24,7 +24,7 @@ software="nginx httpd mod_ssl mod_ruid2 mod_extract_forwarded mod_fcgid
 # Password generator
 gen_pass() {
     MATRIX='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    LENGTH=10
+    LENGTH=32
     while [ ${n:=1} -le $LENGTH ]; do
         PASS="$PASS${MATRIX:$(($RANDOM%${#MATRIX})):1}"
         let n+=1
