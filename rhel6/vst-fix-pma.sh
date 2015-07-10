@@ -33,9 +33,6 @@ gen_pass() {
 }
 
 
-
-
-
 # phpMyAdmin configuration
 wget $CHOST/$VERSION/httpd-pma.conf -O /etc/httpd/conf.d/phpMyAdmin.conf
 wget $CHOST/$VERSION/pma.conf -O /etc/phpMyAdmin/config.inc.php
