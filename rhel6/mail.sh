@@ -1,17 +1,44 @@
 #!/bin/bash
 
+#----------------------------------------------------------#
+#                  Variables&Functions                     #
+#----------------------------------------------------------#
+export PATH=$PATH:/sbin
+RHOST='r.vestacp.com'
+CHOST='c.vestacp.com'
+REPO='cmmnt'
+VERSION='0.9.8/rhel'
+YUM_REPO='/etc/yum.repos.d/vesta.repo'
+software="nginx httpd mod_ssl mod_ruid2 mod_extract_forwarded mod_fcgid
+    php php-bcmath php-cli php-common php-gd php-imap php-mbstring php-mcrypt
+    php-mysql php-pdo php-soap php-tidy php-xml php-xmlrpc quota e2fsprogs
+    phpMyAdmin awstats webalizer vsftpd mysql mysql-server exim dovecot clamd
+    spamassassin curl roundcubemail bind bind-utils bind-libs mc screen ftp
+    libpng libjpeg libmcrypt mhash zip unzip openssl flex rssh libxml2
+    ImageMagick sqlite pcre sudo bc jwhois mailx lsof tar telnet rrdtool
+    fail2ban GeoIP freetype ntp openssh-clients vesta vesta-nginx vesta-php"
 
 
 # Password generator
 gen_pass() {
     MATRIX='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    LENGTH=10
+    LENGTH=32
     while [ ${n:=1} -le $LENGTH ]; do
         PASS="$PASS${MATRIX:$(($RANDOM%${#MATRIX})):1}"
         let n+=1
     done
     echo "$PASS"
 }
+
+
+# phpMyAdmin configuration
+wget $CHOST/$VERSION/httpd-pma.conf -O /etc/httpd/conf.d/phpMyAdmin.conf
+wget $CHOST/$VERSION/pma.conf -O /etc/phpMyAdmin/config.inc.php
+sed -i "s/%blowfish_secret%/$(gen_pass)/g" /etc/phpMyAdmin/config.inc.php
+chmod 777 /var/lib/php/session
+
+
+
 
 
 # Exim
